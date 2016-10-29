@@ -1,5 +1,7 @@
 'use strict';
 const express = require('express');
+const imageList = require('./imagelist');
+
 const app = express();
 const PORT = 8080;
 
@@ -12,6 +14,11 @@ app.get('/', (req, res) => {
 
 app.get('/v', (req, res) => {
   res.render('main');
+});
+
+app.get('/images', (req, res) => {
+  imageList.list()
+    .then(files => res.json(files));
 });
 
 app.listen(8080, function () {

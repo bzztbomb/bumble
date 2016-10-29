@@ -1,8 +1,8 @@
 setInterval(changeBackground, 10);
 
-let r = 150;
+let r = 50;
 let g = 0;
-let b = 150;
+let b = 0;
 
 function changeBackground(){
   let which = _.random(0,2);
