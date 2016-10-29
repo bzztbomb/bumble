@@ -2,10 +2,13 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Montserrat', sans-serif;
+  background-color: rgb(150,0,150);
 }
 
 a {
   text-decoration: none;
+  color: white;
+  -webkit-text-stroke: red 2px;
 }
 
 #intro {
@@ -15,5 +18,5 @@ a {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-120%);
+    transform: translateX(-50%) translateY(-150%);
 }
