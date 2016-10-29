@@ -16,9 +16,8 @@ app.get('/v', (req, res) => {
   res.render('main');
 });
 
-app.get('/images', (req, res) => {
-  imageList.list()
-    .then(files => res.json(files));
+app.get('/i', (req, res) => {
+  imageList.random().then(file => res.send(file));
 });
 
 app.listen(8080, function () {
