@@ -3,7 +3,7 @@ const express = require('express');
 const imageList = require('./imagelist');
 
 const app = express();
-const PORT = 8080;
+const PORT = 6546;
 
 app.use(express.static('static'));
 app.set('view engine', 'pug');
