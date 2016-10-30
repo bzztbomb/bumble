@@ -11,17 +11,13 @@ function doSingleAnimation(){
   return getImageName()
       .then(loadImage)
       .then(img => {
-          let start = randomEdgePoint();
-          start = positionOffScreen(start, img);
-          // console.log(`Starting at ${start.coord}: ${start.x}x${start.y}`);
-          // console.log('window is ' + $(window).width() + 'x' + $(window).height());
-          img.css({left: start.x, top: start.y});
-          if(_.random(0,1)){
-            flipHorizontal(img);
-          }
-          let end = randomEdgePoint(COORDS.filter(c => c != start.coord));
-          end = positionOffScreen(end, img);
-          img.velocity({left: end.x + 'px', top: end.y + 'px'},
+
+          let trajectory = getTrajectory(img);
+          img.css({left: trajectory.start.x, top: trajectory.start.y});
+
+          mutateImage(img);
+
+          img.velocity({left: trajectory.end.x + 'px', top: trajectory.end.y + 'px'},
               {easing: null, duration: _.random(1000, 10000), complete: () => {
                   // console.log('done animating');
                   img.remove();
@@ -30,6 +26,27 @@ function doSingleAnimation(){
               }
           );
       });
+}
+
+function mutateImage(img){
+  if(_.random(0,1)){
+    flipHorizontal(img);
+  }
+  if(((img.width() == 400) || (img.height() == 400)) && _.random(0, 100) < 25){
+    let min = 150;
+    img.css({'max-width': _.random(min, 400) + 'px'});
+    img.css({'max-height': _.random(min, 400) + 'px'});
+  }
+}
+
+function getTrajectory(img){
+  let start = randomEdgePoint();
+  start = positionOffScreen(start, img);
+  // console.log(`Starting at ${start.coord}: ${start.x}x${start.y}`);
+  // console.log('window is ' + $(window).width() + 'x' + $(window).height());
+  let end = randomEdgePoint(COORDS.filter(c => c != start.coord));
+  end = positionOffScreen(end, img);
+  return { start: start, end: end};
 }
 
 function randomEdgePoint(coords){
@@ -86,7 +103,7 @@ function loadImage(filename){
     img.onload = () => {
       img = $(img);
       $('body').append(img);
-      console.log(`loaded ${filename} ${img.width()}x${img.height()}`);
+      // console.log(`loaded ${filename} ${img.width()}x${img.height()}`);
       fulfill(img);
     };
     img.src = `/images/${filename}`;
