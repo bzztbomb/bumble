@@ -1,18 +1,27 @@
 
 
 $( document ).ready(() => {
-
-  console.log( "ready!" );
-  getImageName()
-    .then(loadImage)
-    .then(img => {
-        img.css({left: -1 * img.width(), top: -1 * img.height()});
-        img.velocity({top: $(document).height() + 'px', left: $(document).width() + 'px'},
-            {easing: null, duration: 6000, complete: () => console.log('done animating')});
-      });
+  console.log("let's get ready to bumble!");
+  doSingleAnimation();
 });
 
+function doSingleAnimation(){
+  return getImageName()
+      .then(loadImage)
+      .then(img => {
+          img.css({left: -1 * img.width(), top: -1 * img.height()});
+          img.velocity({top: $(document).height() + 'px', left: $(document).width() + 'px'},
+              {easing: null, duration: _.random(1000, 10000), complete: () => {
+                  console.log('done animating');
+                  return doSingleAnimation();
+                }
+              }
+          );
+      });
+}
+
 function loadImage(filename){
+  console.log(`starting load ${filename}`);
   return new Promise((fulfill,reject) => {
     let img = new Image();
     img.className = 'imgitem';
