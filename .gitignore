@@ -6,3 +6,4 @@ original_images/*.jpg
 original_images/*.PNG
 original_images/*.GIF
 original_images/*.JPG
+env.sh
