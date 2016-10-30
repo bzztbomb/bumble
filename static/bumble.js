@@ -1,4 +1,5 @@
 
+const COORDS = ['left', 'right', 'top', 'bottom'];
 
 $( document ).ready(() => {
   console.log("let's get ready to bumble!");
@@ -9,18 +10,58 @@ function doSingleAnimation(){
   return getImageName()
       .then(loadImage)
       .then(img => {
-          img.css({left: -1 * img.width(), top: -1 * img.height()});
+          let start = randomEdgePoint();
+          start = positionOffScreen(start, img);
+          console.log(`Starting at ${start.coord}: ${start.x}x${start.y}`);
+          img.css({left: start.x, top: start.y});
           if(_.random(0,1)){
             flipHorizontal(img);
           }
-          img.velocity({top: $(document).height() + 'px', left: $(document).width() + 'px'},
+          let end = randomEdgePoint(COORDS.filter(c => c != start.coord));
+          end = positionOffScreen(end, img);
+          img.velocity({left: end.x + 'px', top: end.y + 'px'},
               {easing: null, duration: _.random(1000, 10000), complete: () => {
                   console.log('done animating');
+                  img.remove();
                   return doSingleAnimation();
                 }
               }
           );
       });
+}
+
+function randomEdgePoint(coords){
+  coords = coords || COORDS;
+  let coord = coords[_.random(0, coords.length - 1)];
+  switch(coord){
+    case 'left':
+      return {coord: coord, x: 0, y: randomY()};
+    case 'right':
+      return {coord: coord, x: $(document).width(), y: randomY()};
+    case 'top':
+      return {coord: coord, x: randomX(), y: 0};
+    case 'bottom':
+      return {coord: coord, x: randomX(), y: $(document).height()};
+  }
+}
+
+function positionOffScreen(point, img){
+  switch(point.coord){
+    case 'left':
+      point.x = point.x - img.width();
+      break;
+    case 'top':
+      point.y = point. y - img.height();
+  }
+  return point;
+}
+
+function randomX(){
+  return _.random(0, $(document).width());
+}
+
+function randomY(){
+  return _.random(0, $(document).height());
 }
 
 function flipHorizontal(img){
