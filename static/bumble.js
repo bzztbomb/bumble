@@ -19,10 +19,10 @@ function doSingleAnimation(){
 
           let animateOptions = {left: trajectory.end.x + 'px', top: trajectory.end.y + 'px'};
           if(_.random(0, 100) < 25){
-            animateOptions.rotateZ = _.random(0, 720) + 'deg';
+            animateOptions.rotateZ = _.random(-720, 720) + 'deg';
           }
           img.velocity(animateOptions,
-              {easing: null, duration: _.random(1000, 10000), complete: () => {
+              {easing: null, duration: _.random(1000, 20000), complete: () => {
                   // console.log('done animating');
                   img.remove();
                   return doSingleAnimation();
