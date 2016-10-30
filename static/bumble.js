@@ -23,7 +23,6 @@ function doSingleAnimation(){
           }
           img.velocity(animateOptions,
               {easing: null, duration: _.random(1000, 20000), complete: () => {
-                  // console.log('done animating');
                   img.remove();
                   return doSingleAnimation();
                 }
@@ -46,8 +45,6 @@ function mutateImage(img){
 function getTrajectory(img){
   let start = randomEdgePoint();
   start = positionOffScreen(start, img);
-  // console.log(`Starting at ${start.coord}: ${start.x}x${start.y}`);
-  // console.log('window is ' + $(window).width() + 'x' + $(window).height());
   let end = randomEdgePoint(COORDS.filter(c => c != start.coord));
   end = positionOffScreen(end, img);
   return { start: start, end: end};
@@ -88,7 +85,6 @@ function randomY(){
 }
 
 function flipHorizontal(img){
-  // console.log('horizontal flip');
   return img.css({
     '-moz-transform': 'scaleX(-1)',
     '-o-transform': 'scaleX(-1)',
@@ -100,14 +96,12 @@ function flipHorizontal(img){
 }
 
 function loadImage(filename){
-  // console.log(`starting load ${filename}`);
   return new Promise((fulfill,reject) => {
     let img = new Image();
     img.className = 'imgitem';
     img.onload = () => {
       img = $(img);
       $('body').append(img);
-      // console.log(`loaded ${filename} ${img.width()}x${img.height()}`);
       fulfill(img);
     };
     img.src = `/images/${filename}`;

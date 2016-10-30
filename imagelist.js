@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const _ = require('lodash');
-const CACHE_S = 15;
+const CACHE_S = 30;
 
 let imageList = null;
 let lastLoadTime = 0;

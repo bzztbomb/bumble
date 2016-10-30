@@ -20,6 +20,6 @@ app.get('/i', (req, res) => {
   imageList.random().then(file => res.send(file));
 });
 
-app.listen(8080, function () {
+app.listen(PORT, function () {
   console.log(`Bumble started on ${PORT}`);
 });
