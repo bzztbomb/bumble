@@ -3,7 +3,8 @@ const COORDS = ['left', 'right', 'top', 'bottom'];
 
 $( document ).ready(() => {
   console.log("let's get ready to bumble!");
-  doSingleAnimation();
+  _.range(25).forEach(doSingleAnimation);
+  // doSingleAnimation();
 });
 
 function doSingleAnimation(){
@@ -12,7 +13,8 @@ function doSingleAnimation(){
       .then(img => {
           let start = randomEdgePoint();
           start = positionOffScreen(start, img);
-          console.log(`Starting at ${start.coord}: ${start.x}x${start.y}`);
+          // console.log(`Starting at ${start.coord}: ${start.x}x${start.y}`);
+          // console.log('window is ' + $(window).width() + 'x' + $(window).height());
           img.css({left: start.x, top: start.y});
           if(_.random(0,1)){
             flipHorizontal(img);
@@ -21,7 +23,7 @@ function doSingleAnimation(){
           end = positionOffScreen(end, img);
           img.velocity({left: end.x + 'px', top: end.y + 'px'},
               {easing: null, duration: _.random(1000, 10000), complete: () => {
-                  console.log('done animating');
+                  // console.log('done animating');
                   img.remove();
                   return doSingleAnimation();
                 }
@@ -37,11 +39,11 @@ function randomEdgePoint(coords){
     case 'left':
       return {coord: coord, x: 0, y: randomY()};
     case 'right':
-      return {coord: coord, x: $(document).width(), y: randomY()};
+      return {coord: coord, x: $(window).width(), y: randomY()};
     case 'top':
       return {coord: coord, x: randomX(), y: 0};
     case 'bottom':
-      return {coord: coord, x: randomX(), y: $(document).height()};
+      return {coord: coord, x: randomX(), y: $(window).height()};
   }
 }
 
@@ -57,15 +59,15 @@ function positionOffScreen(point, img){
 }
 
 function randomX(){
-  return _.random(0, $(document).width());
+  return _.random(0, $(window).width());
 }
 
 function randomY(){
-  return _.random(0, $(document).height());
+  return _.random(0, $(window).height());
 }
 
 function flipHorizontal(img){
-  console.log('horizontal flip');
+  // console.log('horizontal flip');
   return img.css({
     '-moz-transform': 'scaleX(-1)',
     '-o-transform': 'scaleX(-1)',
@@ -77,7 +79,7 @@ function flipHorizontal(img){
 }
 
 function loadImage(filename){
-  console.log(`starting load ${filename}`);
+  // console.log(`starting load ${filename}`);
   return new Promise((fulfill,reject) => {
     let img = new Image();
     img.className = 'imgitem';
