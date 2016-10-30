@@ -1,2 +1,8 @@
 node_modules/
 static/images/
+original_images/*.png
+original_images/*.gif
+original_images/*.jpg
+original_images/*.PNG
+original_images/*.GIF
+original_images/*.JPG
