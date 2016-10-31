@@ -11,7 +11,6 @@ function doSingleAnimation(){
   return getImageName()
       .then(loadImage)
       .then(img => {
-
           let trajectory = getTrajectory(img);
           img.css({left: trajectory.start.x, top: trajectory.start.y});
 
