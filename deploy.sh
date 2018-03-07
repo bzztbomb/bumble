@@ -9,6 +9,7 @@ set -x
 
 rsync -avv -e "ssh -p ${DEPLOY_PORT}" \
   --progress \
+  --delete \
   --exclude node_modules \
   --exclude deploy.sh \
   --exclude update_images.sh \
