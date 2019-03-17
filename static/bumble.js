@@ -3,8 +3,8 @@ const COORDS = ['left', 'right', 'top', 'bottom'];
 
 $( document ).ready(() => {
   console.log("let's get ready to bumble!");
+  startBackgroundWork();
   _.range(25).forEach(doSingleAnimation);
-  // doSingleAnimation();
 });
 
 function doSingleAnimation(){
@@ -113,4 +113,60 @@ function getImageName(){
       fulfill(file);
     });
   });
+}
+
+//---------------------------------------------------------------------------
+// background stuff starts here....
+function startBackgroundWork(){
+  setupBgCanvas();
+  const timer = setInterval(bgPath, 100);
+  const bias_adjust = setInterval(() => {
+    xtilt_bias = _.random(-21,21);
+  }, 45000);
+  //...
+}
+
+function setupBgCanvas(){
+  const c = document.getElementById("bk");
+  const ctx = c.getContext("2d");
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+  ctx.canvas.width = window.innerWidth;
+  ctx.canvas.height = window.innerHeight;
+}
+
+var xtilt_bias = 0;
+
+function bgPath(){
+  const XSWAY = 12;
+  const c = document.getElementById("bk");
+  const ctx = c.getContext("2d");
+  const ww = $(window).width();
+  const wh = $(window).height();
+  var x = randomX();
+  var y = 0;
+  // console.log(`x = ${x}, y = ${y}`)
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.strokeStyle = pickBgStokeOnce();
+  while( y < wh ) {
+    dy = Math.min(wh, y + _.random(0, 0.05*wh));
+    ctx.lineTo(x, dy);
+    y = dy;
+    x = Math.max(0, Math.min(ww, x + _.random(-XSWAY, XSWAY) + xtilt_bias));
+  }
+  ctx.stroke();
+}
+
+function pickBgStokeOnce(){
+  const colors = [
+    '0, 0, 255',
+    '83,102,132',
+    '23,62,112',
+    '0, 0, 0',
+    '255, 255, 255'
+  ];
+  const a = _.random(0.01, 0.1);
+  const color = _.sample(colors);
+  return `rgb(${color}, ${a})`;
 }
