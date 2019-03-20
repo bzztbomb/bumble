@@ -149,6 +149,7 @@ function bgPath(){
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.strokeStyle = pickBgStokeOnce();
+  ctx.globalAlpha = _.random(0.01, 0.1);
   while( y < wh ) {
     dy = Math.min(wh, y + _.random(0, 0.05*wh));
     ctx.lineTo(x, dy);
@@ -166,7 +167,6 @@ function pickBgStokeOnce(){
     '0, 0, 0',
     '255, 255, 255'
   ];
-  const a = _.random(0.01, 0.1);
   const color = _.sample(colors);
-  return `rgb(${color}, ${a})`;
+  return `rgb(${color})`;
 }
